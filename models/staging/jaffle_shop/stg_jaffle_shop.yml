@@ -1,0 +1,39 @@
+version: 2
+
+models: 
+     - name: stg_customers
+       columns:
+          - name: customer_id
+            description: Primary key for customers
+            tests:
+              - unique
+              - not_null
+     - name: stg_orders
+       description: Staged orders data for our jaffle_shop
+       columns:
+          - name: order_id
+            description: Primary key for orders
+            tests:
+              - unique
+              - not_null 
+          - name: status
+            description: status of payment
+            tests:
+              - accepted_values:
+                   values:
+                     - completed
+                     - shipped
+                     - returned
+                     - placed
+                     - return_pending
+          - name: customer_id
+            tests:
+              - relationships:
+                  to: ref('stg_customers')
+                  field: customer_id
+                                   
+                  
+    
+    
+
+
